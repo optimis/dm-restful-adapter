@@ -15,5 +15,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Dm::Restful::Adapter::VERSION
 
+  gem.add_dependency 'dm-core'
   gem.add_development_dependency 'rspec', '>= 2.9.0'
 end

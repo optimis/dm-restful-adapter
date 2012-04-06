@@ -1,10 +1,16 @@
 require 'dm-core'
+require 'typhoeus'
+require 'multi_json'
 require "dm-restful-adapter/version"
 
-module DataMapper
-  module Adapters
-    class RestfulAdapter < AbstractAdapter
-      # Your code goes here...
-    end
+module Restful
+  autoload :Adapter,       'dm-restful-adapter/adapter'
+  autoload :Request,       'dm-restful-adapter/request'
+  autoload :Configuration, 'dm-restful-adapter/configuration'
+
+  module Backends
+    autoload :Typhoeus, 'dm-restful-adapter/backends/typhoeus'
   end
 end
+
+DataMapper::Adapters::RestfulAdapter = Restful::Adapter

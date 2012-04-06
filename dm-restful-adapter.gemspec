@@ -16,5 +16,8 @@ Gem::Specification.new do |gem|
   gem.version       = Dm::Restful::Adapter::VERSION
 
   gem.add_dependency 'dm-core'
-  gem.add_development_dependency 'rspec', '>= 2.9.0'
+  gem.add_dependency 'multi_json'
+  gem.add_development_dependency 'rspec', '~> 2.9.0'
+  gem.add_development_dependency 'mimic', '~> 0.4.3'
+  gem.add_development_dependency 'supermodel', '~> 0.1.6'
 end

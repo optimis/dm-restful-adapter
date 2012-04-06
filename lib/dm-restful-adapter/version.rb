@@ -1,6 +1,6 @@
-module Dm
-  module Restful
-    module Adapter
+module DataMapper
+  module Adapters
+    module RestfulAdapter
       VERSION = "0.0.1"
     end
   end

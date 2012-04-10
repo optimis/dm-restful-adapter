@@ -1,7 +1,7 @@
 require 'dm-core'
 require 'typhoeus'
 require 'multi_json'
-require "dm-restful-adapter/version"
+require 'dm-restful-adapter/version'
 
 module Restful
   autoload :Adapter,       'dm-restful-adapter/adapter'

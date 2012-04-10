@@ -13,11 +13,13 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "dm-restful-adapter"
   gem.require_paths = ["lib"]
-  gem.version       = Dm::Restful::Adapter::VERSION
+  gem.version       = DataMapper::Adapters::RestfulAdapter::VERSION
 
-  gem.add_dependency 'dm-core'
+  gem.add_dependency 'dm-core', '1.2.1'
   gem.add_dependency 'multi_json'
   gem.add_development_dependency 'rspec', '~> 2.9.0'
   gem.add_development_dependency 'mimic', '~> 0.4.3'
-  gem.add_development_dependency 'supermodel', '~> 0.1.6'
+  gem.add_development_dependency 'activerecord'
+  gem.add_development_dependency 'sqlite3'
+  gem.add_development_dependency 'database_cleaner'
 end

@@ -5,5 +5,10 @@ module Restful
       params = attributes
       Configuration.backend.call(:post, path, params)
     end
+
+    def self.get(model_name, params)
+      path = 'localhost:4000/heffalumps'
+      Configuration.backend.call(:get, path, params)
+    end
   end
 end

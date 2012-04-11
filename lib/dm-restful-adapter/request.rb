@@ -19,7 +19,7 @@ module Restful
     private
 
     def self.resourceify(model_name, id=nil)
-      ["localhost:4000/#{model_name.downcase.pluralize}", id].compact.join('/')
+      [Configuration.domain, model_name.downcase.pluralize, id].compact.join('/')
     end
   end
 end

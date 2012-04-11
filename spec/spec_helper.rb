@@ -28,4 +28,4 @@ RSpec.configure do |config|
   end
 end
 
-Restful::Configuration.domain = 'localhost:4000'
+Restful::Configuration.domain = 'http://localhost:4000'

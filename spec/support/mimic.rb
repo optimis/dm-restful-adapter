@@ -81,9 +81,11 @@ Mimic.mimic(:port => 4000) do
   post "/heffalumps" do
     heffalump = HeffalumpModel.new(params)
     if heffalump.save
-      [200, {}, heffalump.to_json]
+      response = heffalump.to_json
+      [200, {'Content-Type' => 'application/json', 'Content-Length' => response.bytesize}, response]
     else
-      [422, {}, heffalump.to_json]
+      response = heffalump.to_json
+      [422, {'Content-Type' => 'application/json', 'Content-Length' => response.bytesize}, response]
     end
   end
 
@@ -94,18 +96,20 @@ Mimic.mimic(:port => 4000) do
       lumps = HeffalumpModel.search(params)
     end
     response = lumps.to_json
-    [200, {}, response]
+    [200, {'Content-Type' => 'application/json', 'Content-Length' => response.bytesize}, response]
   end
 
   put "/heffalumps/:id" do
     heffalump = HeffalumpModel.find(params['id'])
     heffalump.update_attributes(params['heffalump'])
-    [200, {}, heffalump.to_json]
+    response = heffalump.to_json
+    [200, {'Content-Type' => 'application/json', 'Content-Length' => response.bytesize}, response]
   end
 
   delete "/heffalumps/:id" do
     heffalump = HeffalumpModel.find(params['id'])
     heffalump.destroy
-    [200, {}, [].to_json]
+    response =  [].to_json
+    [200, {'Content-Type' => 'application/json', 'Content-Length' => response.bytesize}, response]
   end
 end

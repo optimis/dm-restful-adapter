@@ -3,7 +3,11 @@ module Restful
     extend self
 
     def backend
-      Backends::Typhoeus
+      @backend ||= Backends::Typhoeus
+    end
+
+    def backend=(backend)
+      @backend = backend
     end
 
     def domain

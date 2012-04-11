@@ -17,5 +17,13 @@ module Restful
     def domain=(domain)
       @domain = domain
     end
+
+    def parser
+      @parser ||= MultiJson
+    end
+
+    def parser=(parser)
+      @parser = parser
+    end
   end
 end

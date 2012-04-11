@@ -16,7 +16,12 @@ module Restful
       resources.each do |resource|
         attr_hash = attrs.inject({}) { |h, (k, v)| h.merge(k.name => v) }
         response = Request.put(resource.model.name, resource.key, attr_hash)
-        resource.attributes = response.except(:id)
+        properties =  resource.model.properties.inspect
+        response.except(:id).each do |k, v|
+          if prop = properties[k.to_sym]
+            prop.set!(resource, v)
+          end
+        end
       end.size
     end
 

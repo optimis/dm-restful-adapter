@@ -1,8 +1,5 @@
 module Restful
   class Adapter < DataMapper::Adapters::AbstractAdapter
-    # This shit is a hack
-    undef :update
-    undef :delete
 
     def create(resources)
       resources.each { |resource|
@@ -15,6 +12,19 @@ module Restful
       Request.get(query.model.name, query.params)
     end
 
+    def update(attrs, resources)
+      resources.each do |resource|
+        attr_hash = attrs.inject({}) { |h, (k, v)| h.merge(k.name => v) }
+        response = Request.put(resource.model.name, resource.key, attr_hash)
+        resource.attributes = response.except(:id)
+      end.size
+    end
+
+    def delete(resources)
+      resources.each do |resource|
+        Request.delete(resource.model.name, resource.key)
+      end.size
+    end
   end
 end
 
@@ -25,6 +35,8 @@ class DataMapper::Query
       k = case k
       when DataMapper::Query::Operator
         [k.target, '.', k.operator].join
+       when DataMapper::Property::Serial
+         k.name
       else
         k
       end

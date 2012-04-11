@@ -54,6 +54,10 @@ class HeffalumpModel < ActiveRecord::Base
         s.limit(v)
       when 'conditions'
         s.where(:num_spots => 5)
+      when 'order'
+         s.order(v)
+      when 'offset'
+         s.offset(v)
       else
         s.where(k => v)
       end
@@ -91,5 +95,17 @@ Mimic.mimic(:port => 4000) do
     end
     response = lumps.to_json
     [200, {}, response]
+  end
+
+  put "/heffalumps/:id" do
+    heffalump = HeffalumpModel.find(params['id'])
+    heffalump.update_attributes(params['heffalump'])
+    [200, {}, heffalump.to_json]
+  end
+
+  delete "/heffalumps/:id" do
+    heffalump = HeffalumpModel.find(params['id'])
+    heffalump.destroy
+    [200, {}, [].to_json]
   end
 end

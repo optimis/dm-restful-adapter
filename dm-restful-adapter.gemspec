@@ -2,8 +2,8 @@
 require File.expand_path('../lib/dm-restful-adapter/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Ryan Moran"]
-  gem.email         = ["ryan.moran@gmail.com"]
+  gem.authors       = ["Ryan Moran", "Hubert Huang"]
+  gem.email         = ["ryan.moran@gmail.com", "hubert77@gmail.com"]
   gem.description   = 'Modular adapter for datamapper to access remote resources restfully'
   gem.summary       = ''
   gem.homepage      = "https://github.com/optimis/dm-restful-adapter"

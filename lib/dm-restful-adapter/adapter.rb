@@ -4,18 +4,18 @@ module Restful
     def create(resources)
       resources.each { |resource|
         dirty_attributes = resource.dirty_attributes.inject({}) { |hash, (k,v)| hash.update(k.name => v) }
-        resource.attributes = Request.post(resource.model.name, dirty_attributes)
+        resource.attributes = Request.post(resource.model.storage_name, dirty_attributes)
       }.size
     end
 
     def read(query)
-      Request.get(query.model.name, query.params)
+      Request.get(query.model.storage_name, query.params)
     end
 
     def update(attrs, resources)
       resources.each do |resource|
         attr_hash = attrs.inject({}) { |h, (k, v)| h.merge(k.name => v) }
-        response = Request.put(resource.model.name, resource.key, attr_hash)
+        response = Request.put(resource.model.storage_name, resource.key, attr_hash)
         properties =  resource.model.properties.inspect
         response.except(:id).each do |k, v|
           if prop = properties[k.to_sym]
@@ -27,7 +27,7 @@ module Restful
 
     def delete(resources)
       resources.each do |resource|
-        Request.delete(resource.model.name, resource.key)
+        Request.delete(resource.model.storage_name, resource.key)
       end.size
     end
   end

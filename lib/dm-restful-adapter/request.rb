@@ -2,24 +2,24 @@ module Restful
   module Request
     extend self
 
-    def post(model_name, attrs)
-      Configuration.backend.call(:post, resourceify(model_name), attrs)
+    def post(storage_name, attrs)
+      Configuration.backend.call(:post, resourceify(storage_name), attrs)
     end
 
-    def get(model_name, attrs)
-      Configuration.backend.call(:get, resourceify(model_name), attrs)
+    def get(storage_name, attrs)
+      Configuration.backend.call(:get, resourceify(storage_name), attrs)
     end
 
-    def put(model_name, id, attrs)
-      Configuration.backend.call(:put, resourceify(model_name, id), model_name.downcase => attrs)
+    def put(storage_name, id, attrs)
+      Configuration.backend.call(:put, resourceify(storage_name, id), storage_name.singularize => attrs)
     end
 
-    def delete(model_name, id)
-      Configuration.backend.call(:delete, resourceify(model_name, id))
+    def delete(storage_name, id)
+      Configuration.backend.call(:delete, resourceify(storage_name, id))
     end
 
-    def resourceify(model_name, id=nil)
-      [Configuration.domain, model_name.downcase.pluralize, id].compact.join('/')
+    def resourceify(storage_name, id=nil)
+      [Configuration.domain, storage_name, id].compact.join('/')
     end
   end
 end

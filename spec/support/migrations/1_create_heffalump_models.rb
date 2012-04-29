@@ -4,6 +4,7 @@ class CreateHeffalumpModels < ActiveRecord::Migration
       t.string :color
       t.integer :num_spots
       t.boolean :striped
+      t.timestamps
     end
   end
 end

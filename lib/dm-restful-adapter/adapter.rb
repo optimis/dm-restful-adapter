@@ -4,7 +4,13 @@ module Restful
     def create(resources)
       resources.each { |resource|
         dirty_attributes = resource.dirty_attributes.inject({}) { |hash, (k,v)| hash.update(k.name => v) }
-        resource.attributes = Request.post(resource.model.storage_name, dirty_attributes)
+        response = Request.post(resource.model.storage_name, dirty_attributes) 
+        properties =  resource.model.properties
+        response.each do |attr_name, val|
+          if prop = properties[attr_name.to_sym]
+            prop.set!(resource, val)
+          end
+        end
       }.size
     end
 

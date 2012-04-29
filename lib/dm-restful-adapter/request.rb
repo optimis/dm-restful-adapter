@@ -3,7 +3,7 @@ module Restful
     extend self
 
     def post(storage_name, attrs)
-      Configuration.backend.call(:post, resourceify(storage_name), attrs)
+      Configuration.backend.call(:post, resourceify(storage_name), storage_name.singularize => attrs)
     end
 
     def get(storage_name, attrs)

@@ -79,7 +79,7 @@ end
 
 Mimic.mimic(:port => 4000) do
   post "/heffalumps" do
-    heffalump = HeffalumpModel.new(params)
+    heffalump = HeffalumpModel.new(params['heffalump'])
     if heffalump.save
       response = heffalump.to_json
       [200, {'Content-Type' => 'application/json', 'Content-Length' => response.bytesize}, response]

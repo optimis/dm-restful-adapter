@@ -6,6 +6,7 @@ require 'dm-restful-adapter/version'
 module Restful
   autoload :Adapter,       'dm-restful-adapter/adapter'
   autoload :Request,       'dm-restful-adapter/request'
+  autoload :Response,       'dm-restful-adapter/response'
   autoload :Configuration, 'dm-restful-adapter/configuration'
 
   module Backends

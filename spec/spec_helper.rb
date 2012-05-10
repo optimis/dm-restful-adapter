@@ -11,7 +11,7 @@ require 'database_cleaner'
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
-  config.fail_fast = true
+  #config.fail_fast = true
   config.filter_run :focus
 
   config.before(:suite) do

@@ -2,8 +2,9 @@ require 'mimic'
 require 'active_record'
 require 'spec/support/setup_mimic_db'
 
-class HeffalumpModel < ActiveRecord::Base
+class RemoteHeffalumpModel < ActiveRecord::Base
   self.include_root_in_json = false
+  self.table_name = 'heffalump_models'
 
   def self.search(params)
     params = format_params(params)
@@ -79,7 +80,7 @@ end
 
 Mimic.mimic(:port => 4000) do
   post "/heffalumps" do
-    heffalump = HeffalumpModel.new(params['heffalump'])
+    heffalump = RemoteHeffalumpModel.new(params['heffalump'])
     if heffalump.save
       response = heffalump.to_json
       [200, {'Content-Type' => 'application/json', 'Content-Length' => response.bytesize}, response]
@@ -89,27 +90,49 @@ Mimic.mimic(:port => 4000) do
     end
   end
 
-  get "/heffalumps" do
-    if params.empty?
-      lumps = HeffalumpModel.all
-    else
-      lumps = HeffalumpModel.search(params)
-    end
-    response = lumps.to_json
-    [200, {'Content-Type' => 'application/json', 'Content-Length' => response.bytesize}, response]
-  end
-
   put "/heffalumps/:id" do
-    heffalump = HeffalumpModel.find(params['id'])
+    heffalump = RemoteHeffalumpModel.find(params['id'])
     heffalump.update_attributes(params['heffalump'])
     response = heffalump.to_json
     [200, {'Content-Type' => 'application/json', 'Content-Length' => response.bytesize}, response]
   end
 
   delete "/heffalumps/:id" do
-    heffalump = HeffalumpModel.find(params['id'])
+    heffalump = RemoteHeffalumpModel.find(params['id'])
     heffalump.destroy
     response =  [].to_json
     [200, {'Content-Type' => 'application/json', 'Content-Length' => response.bytesize}, response]
+  end
+
+  get "/heffalumps" do
+    if params.empty?
+      lumps = RemoteHeffalumpModel.all
+    else
+      lumps = RemoteHeffalumpModel.search(params)
+    end
+    response = lumps.to_json
+    [200, {'Content-Type' => 'application/json', 'Content-Length' => response.bytesize}, response]
+  end
+
+  get "/failing_heffalumps" do
+    if params.empty?
+      lumps = RemoteHeffalumpModel.all
+    else
+      lumps = RemoteHeffalumpModel.search(params)
+    end
+    response = lumps.to_json
+    [200, {'Content-Type' => 'application/json', 'Content-Length' => response.bytesize}, response]
+  end
+
+  post "/failing_heffalumps" do
+    failing_heffalump = RemoteHeffalumpModel.new(params['failing_heffalump'])
+    response = failing_heffalump.to_json
+    [422, {'Content-Type' => 'application/json', 'Content-Length' => response.bytesize}, response]
+  end
+  
+  put "/failing_heffalumps/:id" do
+    heffalump = RemoteHeffalumpModel.find(params['id'])
+    response = heffalump.to_json
+    [422, {'Content-Type' => 'application/json', 'Content-Length' => response.bytesize}, response]
   end
 end

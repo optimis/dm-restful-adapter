@@ -2,33 +2,37 @@ module Restful
   class Adapter < DataMapper::Adapters::AbstractAdapter
 
     def create(resources)
-      resources.each { |resource|
+      resources.map { |resource|
         dirty_attributes = resource.dirty_attributes.inject({}) { |hash, (k,v)| hash.update(k.name => v) }
-        response = Request.post(resource.model.storage_name, dirty_attributes) 
-        properties =  resource.model.properties
-        response.each do |attr_name, val|
-          if prop = properties[attr_name.to_sym]
-            prop.set!(resource, val)
+        response = Request.post(resource.model.storage_name, dirty_attributes)
+        if response.status == 200
+          properties =  resource.model.properties
+          response.body.each do |attr_name, val|
+            if prop = properties[attr_name.to_sym]
+              prop.set!(resource, val)
+            end
           end
         end
-      }.size
+      }.compact.size
     end
 
     def read(query)
-      Request.get(query.model.storage_name, query.params)
+      Request.get(query.model.storage_name, query.params).body
     end
 
     def update(attrs, resources)
-      resources.each do |resource|
+      resources.map do |resource|
         attr_hash = attrs.inject({}) { |h, (k, v)| h.merge(k.name => v) }
         response = Request.put(resource.model.storage_name, resource.key, attr_hash)
-        properties =  resource.model.properties.inspect
-        response.except(:id).each do |k, v|
-          if prop = properties[k.to_sym]
-            prop.set!(resource, v)
+        if response.status == 200
+          properties =  resource.model.properties.inspect
+          response.body.except(:id).each do |k, v|
+            if prop = properties[k.to_sym]
+              prop.set!(resource, v)
+            end
           end
         end
-      end.size
+      end.compact.size
     end
 
     def delete(resources)

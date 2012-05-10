@@ -36,9 +36,10 @@ module Restful
     end
 
     def delete(resources)
-      resources.each do |resource|
-        Request.delete(resource.model.storage_name, resource.key)
-      end.size
+      resources.map do |resource|
+        response = Request.delete(resource.model.storage_name, resource.key)
+        response.status == 200 ? response.body : nil
+      end.compact.size
     end
   end
 end

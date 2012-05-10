@@ -135,4 +135,10 @@ Mimic.mimic(:port => 4000) do
     response = heffalump.to_json
     [422, {'Content-Type' => 'application/json', 'Content-Length' => response.bytesize}, response]
   end
+
+  delete "/failing_heffalumps/:id" do
+    heffalump = RemoteHeffalumpModel.find(params['id'])
+    response =  [].to_json
+    [422, {'Content-Type' => 'application/json', 'Content-Length' => response.bytesize}, response]
+  end
 end

@@ -74,4 +74,23 @@ describe DataMapper::Adapters::RestfulAdapter do
       end
     end
   end
+
+  describe '#delete' do
+    context 'success' do
+      it 'returns number of records successfully saved' do
+        RemoteHeffalumpModel.create(:color => 'red')
+        heffalump = Heffalump.all.first
+        adapter.delete([heffalump]).should == 1
+      end
+    end
+
+    context 'error' do
+      it 'returns 0 if no records are successfully saved' do
+        RemoteHeffalumpModel.create(:color => 'red')
+        failing_heffalump = FailingHeffalump.all.first
+        adapter.delete([failing_heffalump]).should == 0
+      end
+    end
+
+  end
 end

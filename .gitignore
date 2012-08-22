@@ -1,4 +1,5 @@
 *.gem
+.rbenv-*
 *.rbc
 .bundle
 .config

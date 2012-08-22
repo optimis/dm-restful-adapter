@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/dm-restful-adapter/version', __FILE__)
+$:.unshift File.expand_path('../lib', __FILE__)
+require 'dm-restful-adapter/version'
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Ryan Moran", "Hubert Huang"]

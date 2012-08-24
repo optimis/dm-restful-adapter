@@ -17,4 +17,6 @@ module Restful
   end
 end
 
-DataMapper::Adapters::RestfulAdapter = Restful::Adapter
+Kernel.silence_warnings do
+  DataMapper::Adapters::RestfulAdapter = Restful::Adapter
+end
